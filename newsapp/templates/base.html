@@ -1,0 +1,86 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>
+        {% block title%}
+        {% endblock %}
+    </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.0/semantic.min.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.0/semantic.min.js"></script>
+
+    <style>
+        .ui .segment{
+            background-color: #f8f8f8;
+        }
+        #content{
+		    margin: 0 !important;
+            border-top: 0px;
+		}
+        #logo img{
+            width: 70px !important;
+        }
+    </style>
+
+</head>
+<body>
+    <!-- Your Semantic UI Code -->
+    <div class="ui grid">
+        <div class="computer only row">
+            <div class="column">
+                <div class="ui menu">
+                    <a id="logo" class="item">
+                        <img src="https://wallpapercave.com/wp/wp2701440.jpg" width="70px">
+                    </a>
+                    <a href="{{url_for('index')}}" class="item">Home</a>
+                    <a class="item">News</a>
+                    <a class="item">Blogs</a>
+                    <a class="item">Messages</a>
+                    <div class="right menu">
+                        <a href="{{url_for('login')}}" class="item right">Login</a>
+                        <a href="{{url_for('register')}}" class="item right">Register</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tablet mobile only row">
+            <div class="column">
+                <div class="ui menu">
+                    <a id="mobile_item" class="item"><i class="bars icon"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="content" class="ui pushable segment">
+        <div class="ui sidebar vertical menu">
+            <a class="item">Menu Item A</a>
+            <a class="item">Menu Item B</a>
+            <a class="item">Menu Item C</a>
+            <a class="item">Menu Item D</a>
+        </div>
+        <div class="pusher">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                <div class="{{category}}">
+                    {{message}}
+                </div>
+                {% endfor %}
+          {% endif %}
+          {% endwith %}
+            <div class="ui segment">
+                    {% block content %}
+                    {% endblock %}
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+  $( document ).ready(function() {
+    $('.ui.sidebar').sidebar({context: $('.ui.pushable.segment'),transition: 'overlay'}).sidebar('attach events', '#mobile_item');
+  });
+  </script>
+</html>

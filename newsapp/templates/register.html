@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="ui container">
+        <div class="ui two column very relaxed stackable grid">
+            <div class="column">
+            <h1 class="header">Registration Form</h1>
+            <form class="ui form" method="POST" action="" enctype="multipart/form-data">
+                {{ register_form.csrf_token }}
+                <div class="field">
+                    <div class="two fields">
+                        {% if register_form.username.errors %}
+                        {%  for error in register_form.username.errors %}
+                        <div class="field error">
+                                {{register_form.username.label}}
+                                {{register_form.username}}
+                                <div class="ui basic red pointing prompt label transition visible">{{error}}</div>
+                        </div>
+                        {% endfor %}
+                        {% else %}
+                        <div class="field">
+                                {{register_form.username.label}}
+                                {{register_form.username}}
+                        </div>
+                        {% endif %}
+                    <div class="field">
+                        {% if register_form.email.errors %}
+                        {%  for error in register_form.email.errors %}
+                        <div class="field error">
+                                {{register_form.email.label}}
+                                {{register_form.email}}
+                                <div class="ui basic red pointing prompt label transition visible">{{error}}</div>
+                        </div>
+                        {% endfor %}
+                        {% else %}
+                        <div class="field">
+                            {{register_form.email.label}}
+                            {{register_form.email}}
+                        </div>
+                        {% endif %}
+                    </div>
+                    </div>
+                </div>
+                <div class="field">
+                    {{register_form.password.label}}
+                    {{register_form.password}}
+                </div>
+                <div class="field">
+                    {{register_form.dob.label}}
+                    {{register_form.dob}}
+                </div>
+                {{register_form.submit(class="ui button")}}
+                </form>
+            </div>
+            <div class="middle aligned column">
+            <a href="{{url_for('login')}}" class="ui big button">
+                <i class="signup icon"></i>
+                Login
+            </a>
+            </div>
+        </div>
+        <div class="ui grid computer only">
+            <div class="ui computer only vertical divider">
+                Or
+            </div>
+        </div>
+
+</div>
+{% endblock %}
